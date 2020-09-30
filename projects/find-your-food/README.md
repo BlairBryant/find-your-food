@@ -12,3 +12,4 @@ User can find recipes based off of the ingredients they have
 
 P2
 Pagination for recipe results.
+User can favorite and save recipes
