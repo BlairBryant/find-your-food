@@ -1,15 +1,19 @@
-#Find Your Food
+# Find Your Food
 
-A web app for keeping track of ingredients a user currently has, 
-and a way to find recipes that can be made with only ingredients the user currently has.
+A mobile responsive fullstack web application built using React (React Hooks) on the frontend, and a RESTful API built in Java/Spring with a MySQL database on the backend.
 
-P0
-User authentication
-User can create, read, update, delete ingredients
+The application stores user input regarding food ingredients a user currently has, providing functionality to Create, Read, Update, and Delete ingredients.
+It then uses the list of ingredients attached to the user to search for all recipes stored in the database that can be made using only the ingredients the user has in their list.
+The user can view the different recipes available to them.
+The user can add recipes to their favorites list
+They can also search for recipes that contain a list of ingredients they input.
 
-P1
-User can find recipes based off of the ingredients they have
-
-P2
-Pagination for recipe results.
-User can favorite and save recipes
+## Technologies Used
+- React
+- Axios
+- SCSS
+- Java
+- Spring
+- Spring Data JPA
+- Spring PagingAndSortingRepository
+- MySQL
