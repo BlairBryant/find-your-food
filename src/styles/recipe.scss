@@ -10,6 +10,7 @@
     }
 
     h2 {
+        width: 100%;
         padding-top: 16px;
         padding-bottom: 4px;
         font-weight: bold;
@@ -20,6 +21,20 @@
         position: relative;
         transform: translateX(-50%);
         left: 50%;
+    }
+
+    .recipe-title {
+        display: flex;
+        position: relative;
+    }
+
+    .favorite-icon {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        position: absolute;
+        top: 16px;
+        margin-left: 132px;
     }
 
     h3 {
@@ -54,6 +69,17 @@
 
     @media (min-width: $min-tablet) {
         
+        h2 {
+            width: 50%;
+        }
+
+        .favorite-icon {
+            position: static;
+            top: 0px;
+            margin-top: 16px;
+            margin-left: 60px;
+        }
+
         .recipe-top {
             display: flex;
 

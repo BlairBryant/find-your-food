@@ -4,26 +4,46 @@ import axios from '../axios'
 import { useParams, Link } from 'react-router-dom';
 import '../styles/recipe.scss';
 import Header from './Header';
+import favoriteIcon from '../styles/assets/star.svg';
+import notFavoriteIcon from '../styles/assets/empty-star.svg';
 
 
 const Recipe = () => {
     const [recipe, setRecipe] = useState({ foods: [], steps: [] });
     const [noRecipe, setNoRecipe] = useState(false);
+    const [isFavorited, setIsFavorited] = useState(false);
     // const [user] = useContext(UserContext);
     const { id } = useParams();
     useEffect(() => {
         const fetchRecipe = async () => {
             const response = await axios.get(`/recipe/${id}`);
-            // console.log("recipes: ", response.data);
+            console.log("recipe: ", response.data);
             if (response.data) {
                 setRecipe(response.data);
+                const filteredForFavorite = response.data.favoritedBy.filter(user => user.id === 1);
+                if (filteredForFavorite.length) {
+                    setIsFavorited(true);
+                }
             } else {
-                setNoRecipe(prevValue => !prevValue)
+                setNoRecipe(prevValue => !prevValue);
             }
         }
         fetchRecipe();
-
     }, [setRecipe, id]);
+
+    const setOrUnsetFavorite = async () => {
+        if (!isFavorited) {
+            const response = await axios.post(`/recipe/${id}/1`);
+            console.log(response.data);
+            setIsFavorited(true);
+        } else {
+            const response = await axios.delete(`/recipe/${id}/1`);
+            console.log(response.data);
+            if (response.data === "Success") {
+                setIsFavorited(false);
+            }
+        }
+    }
 
     return (
         <div>
@@ -34,7 +54,10 @@ const Recipe = () => {
                     !noRecipe
                         ?
                         <div>
-                            <h2>{recipe.name}</h2>
+                            <div className="recipe-title">
+                                <h2>{recipe.name}</h2>
+                                <img src={isFavorited ? favoriteIcon : notFavoriteIcon} alt="Favorite Icon" className="favorite-icon" onClick={setOrUnsetFavorite}/>
+                            </div>
                             <div className="recipe-top">
                                 <img src={recipe.image} alt="Recipe" />
                                 <div>

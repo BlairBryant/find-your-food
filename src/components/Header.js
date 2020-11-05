@@ -24,7 +24,7 @@ const Header = () => {
                 <img src={fridge} alt="fridge"/>
                 <Link to="/ingredients"><h3>My Fridge</h3></Link>
                 <Link to="/recipes"><h3>Find Recipes</h3></Link>
-                <Link to="/recipes/favorite"><h3>Favorite Recipes</h3></Link>
+                <Link to="/recipe/favorites"><h3>Favorite Recipes</h3></Link>
                 <Link to="/account"><h3>Account</h3></Link>
             </div>
         </div>

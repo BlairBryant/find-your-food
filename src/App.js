@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Ingredients from './components/Ingredients';
 import Recipes from './components/Recipes';
 import Recipe from './components/Recipe';
+import FavoriteRecipes from './components/FavoriteRecipes';
 
 const App = () => (
   <Switch>
@@ -12,6 +13,7 @@ const App = () => (
     <Route path='/ingredients' component={Ingredients}/>
     <Route path='/recipes/:id' component={Recipe}/>
     <Route path='/recipes' component={Recipes}/>
+    <Route path='/recipe/favorites' component={FavoriteRecipes}/>
   </Switch>
 );
 

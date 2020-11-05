@@ -1,5 +1,23 @@
 @import "utilities";
 
+.find-recipes__input {
+    padding-top: 70px;
+    margin-bottom: -20px;
+    display: flex;
+    justify-content: center;
+
+    input {
+        width: 80%;
+        height: 40px;
+        padding-left: 8px;
+        font-size: 16px;
+
+        @media (min-width: $min-tablet) {
+            width: 50%;
+        }
+    }
+}
+
 .recipes {
     display: flex;
     flex-wrap: wrap;
@@ -8,8 +26,6 @@
 
     div {
         padding-bottom: 12px;
-
-
     }
 
     h2 {
@@ -23,6 +39,15 @@
         height: auto;
     }
 
+    .favorite-icon {
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        top: 0px;
+        right: 40px;
+        cursor: pointer;
+    }
+
     a {
         width: 90%;
     }
@@ -31,11 +56,22 @@
         margin-top: 18px;
     }
 
+    &__container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+    }
+
     @media (min-width: $min-tablet) {
-        
+
         div {
             width: 50%;
             padding-bottom: 20px;
+        }
+
+        .favorite-icon {
+            right: 100px;
         }
     }
 }

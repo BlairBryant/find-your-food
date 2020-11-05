@@ -4,12 +4,14 @@ import axios from '../axios';
 import { Link } from 'react-router-dom';
 import '../styles/recipes.scss';
 import Header from './Header';
-
+import favoriteIcon from '../styles/assets/star.svg';
+import notFavoriteIcon from '../styles/assets/empty-star.svg';
 
 const Recipes = () => {
     const [recipes, setRecipes] = useState([]);
     const [noRecipes, setNoRecipes] = useState(false);
     const [user] = useContext(UserContext);
+    const [ingredients, setIngredients] = useState("");
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -26,16 +28,27 @@ const Recipes = () => {
 
     }, [setRecipes, user]);
 
+    const findRecipesByIngredient = async (e) => {
+        e.preventDefault();
+        const response = await axios.get(`/recipes?ingredients=${ingredients}`)
+        // console.log(response.data);
+        setRecipes(response.data);
+    }
+
     return (
         <div>
             <Header />
+            <form onSubmit={findRecipesByIngredient} className="find-recipes__input">
+                <input placeholder="Search for recipes by ingredient..." onChange={e => setIngredients(e.target.value)}/>
+            </form>
             <div className="recipes">
                 {
                     !noRecipes
                         ?
                         recipes.map((recipe, i) => (
-                            <div key={recipe.id} className="column align-center">
+                            <div key={recipe.id} className="recipes__container">
                                 <h2>{recipe.name}</h2>
+                                <img src={recipe.favoritedBy.length ? favoriteIcon : notFavoriteIcon} alt="Favorite Icon" className="favorite-icon"/>
                                 <Link to={`/recipes/${recipe.id}`}><img src={recipe.image} alt="Recipe" className={`recipe${i}`}/></Link>
                             </div>
                         ))
