@@ -51,9 +51,13 @@ h1 {
   text-transform: lowercase;
 }
 
+h2, h3, h4, h5, a, p, button, select, label, input, span {
+  font-family: 'Manrope', sans-serif;
+  font-weight: bold;
+}
+
 h2 {
   font-size: 32px;
-  font-family: 'Manrope', sans-serif;
 }
 
 h3 {

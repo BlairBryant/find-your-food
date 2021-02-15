@@ -10,23 +10,26 @@ const Home = (props) => {
     const [viewLogin, setViewLogin] = useState(true);
 
     const registerUser = async (data) => {
-        const response = await axios.post("/register", data);
-        // console.log(response.data);
-        setUser(response.data)
-        // console.log(user);
-        props.history.push("/ingredients");
+        try {
+            const response = await axios.post("/register", data);
+            setUser(response.data)
+            props.history.push("/ingredients");
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     const login = async (data) => {
-        const response = await axios.post("/login", data);
-        if (response.data) {
-            // console.log("login: ", response.data);
-            setUser(response.data)
-            // console.log(user);
-            props.history.push("/ingredients");
-        } else {
-            //TODO: Tell user does not exist
-            // console.log("errrrrorrr");
+        try {
+            const response = await axios.post("/login", data);
+            if (response.data) {
+                setUser(response.data)
+                props.history.push("/ingredients");
+            } else {
+                //TODO: Tell user does not exist
+            }
+        } catch (e) {
+            console.error(e)
         }
     }
 
