@@ -17,52 +17,60 @@ const Ingredients = (props) => {
 
     useEffect(() => {
         const fetchIngredients = async () => {
-            // const response = await axios.get(`/ingredients/${user.id}`);
-            const response = await axios.get(`/ingredients/1`);
-            // console.log("ingredients: ", response.data);
-            let values = {};
-            response.data.forEach(ingredient => {
-                values[`amount${ingredient.id}`] = ingredient.amount;
-            })
-            reset(values)
-            setIngredients(response.data);
+            try {
+                const response = await axios.get(`/ingredients/${user.id}`);
+                let values = {};
+                response.data.forEach(ingredient => {
+                    values[`amount${ingredient.id}`] = ingredient.amount;
+                })
+                reset(values)
+                setIngredients(response.data);
+            } catch (e) {
+                console.error(e)
+            }
         }
         fetchIngredients();
         const fetchCategories = async () => {
-            // const response = await axios.get(`/categories/${user.id}`);
-            const response = await axios.get(`/categories/1`);
-            // console.log("categories: ", response.data);
-            setCategories(response.data);
+            try {
+                const response = await axios.get(`/categories/${user.id}`);
+                setCategories(response.data);
+            } catch (e) {
+                console.error(e)
+            }
         }
         fetchCategories();
 
     }, [setIngredients, setCategories, user, reset]);
 
     const addCategory = async (data, e) => {
-        const response = await axios.post("/categories/1", { name: data.categoryName });
-        // console.log(response.data);
-        setCategories([...categories, response.data]);
-        e.target.reset();
+        try {
+            const response = await axios.post(`/categories/${user.id}`, { name: data.categoryName });
+            setCategories([...categories, response.data]);
+            e.target.reset();
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     const addIngredient = async (data, e) => {
-        console.log(data);
-        const response = await axios.post("/ingredients/1", {
-            name: data.name, amount: data.amount, category: {
-                id: +data.category
-            }
-        });
-        console.log(response.data);
-        let tempIngredients = [...ingredients, response.data];
-        let values = {};
-        tempIngredients.forEach(ingredient => {
-            values[`amount${ingredient.id}`] = ingredient.amount;
-        });
-        reset(values)
-        const categoriesResponse = await axios.get(`/categories/1`);
-        // console.log("categories: ", categoriesResponse.data);
-        setCategories(categoriesResponse.data);
-        e.target.reset();
+        try {
+            const response = await axios.post(`/ingredients/${user.id}`, {
+                name: data.name, amount: data.amount, category: {
+                    id: +data.category
+                }
+            });
+            let tempIngredients = [...ingredients, response.data];
+            let values = {};
+            tempIngredients.forEach(ingredient => {
+                values[`amount${ingredient.id}`] = ingredient.amount;
+            });
+            reset(values)
+            const categoriesResponse = await axios.get(`/categories/${user.id}`);
+            setCategories(categoriesResponse.data);
+            e.target.reset();
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     const updateAmount = async (data, e) => {
@@ -73,24 +81,32 @@ const Ingredients = (props) => {
                 ingredient.amount = data[`amount${ingredient.id}`];
                 return ingredient;
             })
-            const response = await axios.put('/ingredients', { ingredients: updatedIngredients });
-            // console.log(response);
+            try {
+                await axios.put('/ingredients', { ingredients: updatedIngredients });
+            } catch (e) {
+                console.error(e)
+            }
         }
     }
 
     const deleteCategory = async (data) => {
-        const response = await axios.delete(`/categories/${+data.deleteCategory}`);
-        // console.log("delete category: ", response.data);
-        setCategories(response.data);
+        try {
+            const response = await axios.delete(`/categories/${+data.deleteCategory}`);
+            setCategories(response.data);
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     const deleteIngredient = async (e, ingredientId) => {
         e.preventDefault()
-        const response = await axios.delete(`/ingredients/${+ingredientId}`)
-        console.log("delete response: ", response);
-        const categoriesResponse = await axios.get(`/categories/1`);
-        // console.log("categories: ", categoriesResponse.data);
-        setCategories(categoriesResponse.data);
+        try {
+            await axios.delete(`/ingredients/${+ingredientId}`)
+            const categoriesResponse = await axios.get(`/categories/${user.id}`);
+            setCategories(categoriesResponse.data);
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     const goToRecipes = () => {

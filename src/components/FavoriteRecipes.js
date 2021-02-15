@@ -12,13 +12,15 @@ const FavoriteRecipes = () => {
 
     useEffect(() => {
         const fetchRecipes = async () => {
-            // const response = await axios.get(`/recipes/${user.id}`);
-            const response = await axios.get(`/recipes/favorites/1`);
-            console.log("recipes: ", response.data);
-            if (response.data.length) {
-                setRecipes(response.data);
-            } else {
-                setNoRecipes(prevValue => !prevValue);
+            try {
+                const response = await axios.get(`/recipes/${user.id}`);
+                if (response.data.length) {
+                    setRecipes(response.data);
+                } else {
+                    setNoRecipes(prevValue => !prevValue);
+                }
+            } catch (e) {
+                console.error(e)
             }
         }
         fetchRecipes();
@@ -37,7 +39,7 @@ const FavoriteRecipes = () => {
                             recipes.map((recipe, i) => (
                                 <div key={recipe.id} className="recipes__container">
                                     <h2>{recipe.name}</h2>
-                                    <Link to={`/recipes/${recipe.id}`}><img src={recipe.image} alt="Recipe" className={`recipe${i}`}/></Link>
+                                    <Link to={`/recipes/${recipe.id}`}><img src={recipe.image} alt="Recipe" className={`recipe${i}`} /></Link>
                                 </div>
                             ))
                             :

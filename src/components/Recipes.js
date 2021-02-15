@@ -15,13 +15,15 @@ const Recipes = () => {
 
     useEffect(() => {
         const fetchRecipes = async () => {
-            // const response = await axios.get(`/recipes/${user.id}`);
-            const response = await axios.get(`/recipes/1`);
-            // console.log("recipes: ", response.data);
-            if (response.data) {
-                setRecipes(response.data);
-            } else {
-                setNoRecipes(prevValue => !prevValue);
+            try {
+                const response = await axios.get(`/recipes/${user.id}`);
+                if (response.data) {
+                    setRecipes(response.data);
+                } else {
+                    setNoRecipes(prevValue => !prevValue);
+                }
+            } catch (e) {
+                console.error(e)
             }
         }
         fetchRecipes();
@@ -30,16 +32,19 @@ const Recipes = () => {
 
     const findRecipesByIngredient = async (e) => {
         e.preventDefault();
-        const response = await axios.get(`/recipes?ingredients=${ingredients}`)
-        // console.log(response.data);
-        setRecipes(response.data);
+        try {
+            const response = await axios.get(`/recipes?ingredients=${ingredients}`)
+            setRecipes(response.data);
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     return (
         <div>
             <Header />
             <form onSubmit={findRecipesByIngredient} className="find-recipes__input">
-                <input placeholder="Search for recipes by ingredient..." onChange={e => setIngredients(e.target.value)}/>
+                <input placeholder="Search for recipes by ingredient..." onChange={e => setIngredients(e.target.value)} />
             </form>
             <div className="recipes">
                 {
@@ -48,8 +53,8 @@ const Recipes = () => {
                         recipes.map((recipe, i) => (
                             <div key={recipe.id} className="recipes__container">
                                 <h2>{recipe.name}</h2>
-                                <img src={recipe.favoritedBy.length ? favoriteIcon : notFavoriteIcon} alt="Favorite Icon" className="favorite-icon"/>
-                                <Link to={`/recipes/${recipe.id}`}><img src={recipe.image} alt="Recipe" className={`recipe${i}`}/></Link>
+                                <img src={recipe.favoritedBy.length ? favoriteIcon : notFavoriteIcon} alt="Favorite Icon" className="favorite-icon" />
+                                <Link to={`/recipes/${recipe.id}`}><img src={recipe.image} alt="Recipe" className={`recipe${i}`} /></Link>
                             </div>
                         ))
                         :

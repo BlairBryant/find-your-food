@@ -9,11 +9,11 @@ import FavoriteRecipes from './components/FavoriteRecipes';
 
 const App = () => (
   <Switch>
-    <Route exact path='/' component={Home}/>
-    <Route path='/ingredients' component={Ingredients}/>
-    <Route path='/recipes/:id' component={Recipe}/>
-    <Route path='/recipes' component={Recipes}/>
-    <Route path='/recipe/favorites' component={FavoriteRecipes}/>
+    <Route exact path='/' component={Home} />
+    <Route path='/ingredients' component={Ingredients} />
+    <Route path='/recipes/:id' component={Recipe} />
+    <Route path='/recipes' component={Recipes} />
+    <Route path='/recipe/favorites' component={FavoriteRecipes} />
   </Switch>
 );
 
